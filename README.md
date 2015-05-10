@@ -3,7 +3,7 @@ A simple feed of real photos taken in Israel challenging the simplistic notion t
 
 # Development  
 This is a [flask](http://flask.pocoo.org/) app. In development it should be run
-by doing: `python israelapartheidstate.py`. A server will automatically be run,
+by doing: `python ias.py`. A server will automatically be run,
 then point your browser to the location indicated by the terminal.
 
 # Deploy
