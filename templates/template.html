@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="/static/js/jquery.jscroll.js"></script>
+        <script type="text/javascript" src="/static/js/jquery.ba-throttle-debounce.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="static/css/foundation-5.5.1.custom/css/normalize.css"/>
+        <link type="text/css" rel="stylesheet" href="static/css/foundation-5.5.1.custom/css/foundation.css"/>
+        <title>{{title}}</title>
+    </head>
+    <body>
+        <h1 style="display:none;">{{title}}</h1>
+        <div data-page="{{page}}" class="content" id="ct">
+        {% for image_ob in images %}
+            {% for path, ob in image_ob.iteritems() %}
+                <figure><img src="{{path}}"><figcaption>{{ob.caption}}<time datetime="{{ob.date}}">{{ob.date}}</time></figcaption></figure>
+            {% endfor %}
+        {% endfor %}
+
+        <ul class="pagination">
+            <li class="arrow"><a href="?page=1">&laquo;</a></li>
+            {% for list_ob in pager %}
+                {% if list_ob.current == True %}
+                    <li class="current">
+                {% else %}
+                    <li>
+                {% endif %}
+                {% if list_ob.next == True %}
+                    <a id="next" href="?page={{loop.index}}">{{loop.index}}</a>
+                {% else %}
+                    <a href="?page={{loop.index}}">{{loop.index}}</a>
+                {% endif %}
+                </li>
+            {% endfor %}
+            <li class="arrow"><a href="?page={{pager|length}}">&raquo;</a></li>
+        </ul>
+        </div>
+        <script type="text/javascript" src="static/js/scrolling.js"></script>
+    </body>
+</html
+
