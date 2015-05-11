@@ -1,6 +1,7 @@
 import datetime
 from itertools import izip_longest
 import os
+import sys
 
 from flask import Flask, render_template, request
 from iptcinfo import IPTCInfo
@@ -77,3 +78,20 @@ def index():
         images=images_for_this_page,
         pager=pager_data
     )
+
+if __name__ == "__main__":
+    # For local testing...
+    # $ python ias.py
+    # $ python ias.py host port
+    args =  tuple(sys.argv[1:])
+    try:
+        host, port = args
+    except ValueError:
+        if len(args) == 0:
+            host = None
+            port = None
+        else:
+            host = args[0]
+            port = None
+
+    app.run(host=host, port=int(port))
