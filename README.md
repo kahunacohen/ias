@@ -4,7 +4,9 @@ A simple feed of real photos taken in Israel challenging the simplistic notion t
 # Development  
 This is a [flask](http://flask.pocoo.org/) app. In development it should be run
 by doing: `python ias.py`. A server will automatically be run,
-then point your browser to the location indicated by the terminal.
+then point your browser to the location indicated by the terminal. To change the host and/or the default port,
+pass them as positional parameters to ias.py. Eg. `$ python ias.py somehost 8040` 
+
 
 # Deploy
 Deploying code changes involves a git bare repository on the production server. See [https://www.digitalocean.com/community/tutorials/how-to-use-git-hooks-to-automate-development-and-deployment-tasks](https://www.digitalocean.com/community/tutorials/how-to-use-git-hooks-to-automate-development-and-deployment-tasks).
