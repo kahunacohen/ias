@@ -18,7 +18,7 @@ def grouper(n, iterable, fillvalue=None):
 def get_imagegroups():
     """ Returns a tuple of tuples representing 
     groups of 10 image paths (each group is a page)"""
-    os.chdir(os.path.join(THIS_DIR, "static", "images"))
+    os.chdir(os.path.join(THIS_DIR, "static", "images", "opt"))
     sorted_image_paths = sorted(filter(os.path.isfile, os.listdir('.')), reverse=True)
     os.chdir(THIS_DIR)
     groups =  tuple(grouper(10, sorted_image_paths))
@@ -27,7 +27,7 @@ def get_imagegroups():
         l = []
         for name in group:
             if name:
-                    path = "static/images/%s" % name
+                    path = "static/images/opt/%s" % name
                     d = {}
 		    info = IPTCInfo(path, force=True) 
 		    caption = info.data['caption/abstract'] or ""
