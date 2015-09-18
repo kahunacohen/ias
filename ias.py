@@ -32,7 +32,7 @@ def get_imagegroups():
 		    info = IPTCInfo(path, force=True) 
 		    caption = info.data['caption/abstract'] or ""
                     date = datetime.datetime.fromtimestamp(int(name.replace(".jpg", ""))).strftime('%Y-%m-%d %H:%M:%S')
-                    d[path] = {"date": date, "caption": caption}
+                    d[path] = {"date": date, "caption": "foobar"}
                     l.append(d)
         f.append(l)
     return f
