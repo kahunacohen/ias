@@ -60,7 +60,6 @@ def get_pager_data(this_page, num_pages):
 
 @app.route('/')
 def index():
-    1/0
     try:
         page = int(request.args.get("page")) or 1
     except:
