@@ -11,8 +11,7 @@
         <title>{{title}}</title>
     </head>
     <body>
-	<p>I really don't understand this</p>
-        <h1>This is the title</h1>
+        <h1>{{title}}</h1>
         <div data-page="{{page}}" class="content" id="ct">
         {% for image_ob in images %}
             {% for path, ob in image_ob.iteritems() %}

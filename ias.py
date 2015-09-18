@@ -7,6 +7,7 @@ from flask import Flask, render_template, request
 from iptcinfo import IPTCInfo
 
 app = Flask(__name__)
+app.debug = True
 THIS_DIR = os.path.dirname(os.path.realpath(__file__))
 
 def grouper(n, iterable, fillvalue=None):
@@ -94,4 +95,5 @@ if __name__ == "__main__":
             host = args[0]
             port = None
 
+    app.debug = True
     app.run(host=host, port=int(port))
