@@ -73,7 +73,7 @@ def index():
 
     pager_data = get_pager_data(page, num_pages)
     return render_template("template.html", 
-        title="Is Israel really an apartheid state?",
+        title="foo",
 	page=page,
         images=images_for_this_page,
         pager=pager_data
