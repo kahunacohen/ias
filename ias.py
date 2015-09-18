@@ -32,7 +32,7 @@ def get_imagegroups():
 		    info = IPTCInfo(path, force=True) 
 		    caption = info.data['caption/abstract'] or ""
                     date = datetime.datetime.fromtimestamp(int(name.replace(".jpg", ""))).strftime('%Y-%m-%d %H:%M:%S')
-                    d[path] = {"date": date, "caption": "foobar"}
+                    d[path] = {"date": date, "caption": caption}
                     l.append(d)
         f.append(l)
     return f
@@ -60,6 +60,7 @@ def get_pager_data(this_page, num_pages):
 
 @app.route('/')
 def index():
+    1/0
     try:
         page = int(request.args.get("page")) or 1
     except:
