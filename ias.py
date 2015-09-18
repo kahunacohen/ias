@@ -19,7 +19,15 @@ def grouper(n, iterable, fillvalue=None):
 def get_imagegroups():
     """ Returns a tuple of tuples representing 
     groups of 10 image paths (each group is a page)"""
-    os.chdir(os.path.join(THIS_DIR, "static", "images", "opt"))
+    path_to_optimized_images = os.path.join(THIS_DIR, "static", "images", "opt")
+    try:
+        os.chdir(path_to_optimized_images)
+    except OSError:
+        raise OSError(
+            "Problem getting optimized images at {path}. Run the process-images.py script.".format(
+                path=path_to_optimized_images
+            )
+        )
     sorted_image_paths = sorted(filter(os.path.isfile, os.listdir('.')), reverse=True)
     os.chdir(THIS_DIR)
     groups =  tuple(grouper(10, sorted_image_paths))
