@@ -78,7 +78,10 @@ def index():
     try:
         images_for_this_page = imagegroups[page-1]
     except IndexError:
-        images_for_this_page = imagegroups[0]
+        try:
+            images_for_this_page = imagegroups[0]
+        except IndexError:
+            raise IndexError("No images in assets/images/opt")
 
     pager_data = get_pager_data(page, num_pages)
     return render_template("template.html", 
