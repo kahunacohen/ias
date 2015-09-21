@@ -116,10 +116,11 @@ def optimize(img_dicts):
         im = Image.open(newpath)
         final_im = im
         orientation = img_dict["orientation"]
+        print(img_dict["newpath"])
         if orientation == "Rotated 90 CW":
-            print("rotate!")
-            print(img_dict)
+            print("ROTATING -90!")
             final_im = final_im.rotate(-90)
+        print("\n")
         final_im.thumbnail((640, 480))
         final_im.save(newpath)
 main()
