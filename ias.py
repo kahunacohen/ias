@@ -38,11 +38,11 @@ def get_imagegroups():
             if name:
                     path = "static/images/opt/%s" % name
                     d = {}
-		    info = IPTCInfo(path, force=True) 
-		    caption = info.data['caption/abstract'] or ""
-                    date = datetime.datetime.fromtimestamp(int(name.replace(".jpg", ""))).strftime('%Y-%m-%d %H:%M:%S')
-                    d[path] = {"date": date, "caption": caption}
-                    l.append(d)
+            info = IPTCInfo(path, force=True) 
+            caption = info.data['caption/abstract'] or ""
+            date = datetime.datetime.fromtimestamp(int(name.replace(".jpg", ""))).strftime('%Y-%m-%d %H:%M:%S')
+            d[path] = {"date": date, "caption": caption}
+            l.append(d)
         f.append(l)
     return f
 
@@ -86,7 +86,7 @@ def index():
     pager_data = get_pager_data(page, num_pages)
     return render_template("template.html", 
         title="Is Israel an apartheid state?",
-	page=page,
+        page=page,
         images=images_for_this_page,
         pager=pager_data
     )
@@ -107,5 +107,4 @@ if __name__ == "__main__":
             port = None
 
     #app.debug = True
-    print args
     app.run(host=host, port=int(port))
