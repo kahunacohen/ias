@@ -35,14 +35,14 @@ def get_imagegroups():
     for group in groups:
         l = []
         for name in group:
-            if name:
+            if name is not None:
                     path = "static/images/opt/%s" % name
                     d = {}
-            info = IPTCInfo(path, force=True) 
-            caption = info.data['caption/abstract'] or ""
-            date = datetime.datetime.fromtimestamp(int(name.replace(".jpg", ""))).strftime('%Y-%m-%d %H:%M:%S')
-            d[path] = {"date": date, "caption": caption}
-            l.append(d)
+                    info = IPTCInfo(path, force=True) 
+                    caption = info.data['caption/abstract'] or ""
+                    date = datetime.datetime.fromtimestamp(int(name.replace(".jpg", ""))).strftime('%Y-%m-%d %H:%M:%S')
+                    d[path] = {"date": date, "caption": caption}
+                    l.append(d)
         f.append(l)
     return f
 

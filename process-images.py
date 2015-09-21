@@ -91,7 +91,7 @@ def get_new_image_name_translations(indir, outdir):
             orientation = None
         origtime = str(exif["EXIF DateTimeOriginal"])
         ts = int(time.mktime(datetime.datetime.strptime(origtime, "%Y:%m:%d %H:%M:%S").timetuple()))
-	newpath = os.path.join(outdir, str(ts) + ".jpg")
+        newpath = os.path.join(outdir, str(ts) + ".jpg")
         d[p] = {"newpath": newpath, "orientation": orientation }
     return d
 
@@ -115,10 +115,10 @@ def optimize(img_dicts):
         newpath = img_dict["newpath"]
         im = Image.open(newpath)
         final_im = im
-	orientation = img_dict["orientation"]
+        orientation = img_dict["orientation"]
         if orientation == "Rotated 90 CW":
-	    print("rotate!")
-	    print(img_dict)
+            print("rotate!")
+            print(img_dict)
             final_im = final_im.rotate(-90)
         final_im.thumbnail((640, 480))
         final_im.save(newpath)
