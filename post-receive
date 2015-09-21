@@ -11,6 +11,7 @@ do
         echo "Optimizing original images..."
         . PATH_TO_VIRTUAL_ENV/bin/activate 2>&1
         python PATH_TO_WSGI_APP/process-images.py PATH_TO_WSGI_APP/static/images PATH_TO_WSGI_APP/static/images/opt 2>&1
+        echo "Restarting flask app..."
     else
         echo "Ref $ref successfully received.  Doing nothing: only the master branch may be deployed on this server."
     fi

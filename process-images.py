@@ -108,6 +108,7 @@ def main():
     indir, outdir = get_args()
     image_name_translations = get_new_image_name_translations(indir, outdir)
     copy_images_to_out(image_name_translations)
+    print(image_name_translations)
     optimize(image_name_translations.values())
     
 def optimize(img_dicts):
@@ -116,11 +117,14 @@ def optimize(img_dicts):
         im = Image.open(newpath)
         final_im = im
         orientation = img_dict["orientation"]
-        print(img_dict["newpath"])
+        #print(img_dict)
+        #print(img_dict["newpath"])
         if orientation == "Rotated 90 CW":
-            print("ROTATING -90!")
+            #print("ROTATING -90!")
             final_im = final_im.rotate(-90)
-        print("\n")
+        if orientation == "Rotated 90 CCW":
+            final_im = final_im.rotate(-90)
+        #print("\n")
         final_im.thumbnail((640, 480))
         final_im.save(newpath)
 main()
