@@ -108,7 +108,6 @@ def main():
     indir, outdir = get_args()
     image_name_translations = get_new_image_name_translations(indir, outdir)
     copy_images_to_out(image_name_translations)
-    print(image_name_translations)
     optimize(image_name_translations.values())
     
 def optimize(img_dicts):
