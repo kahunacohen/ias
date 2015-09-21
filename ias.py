@@ -106,5 +106,6 @@ if __name__ == "__main__":
             host = args[0]
             port = None
 
-    app.debug = True
+    #app.debug = True
+    print args
     app.run(host=host, port=int(port))
