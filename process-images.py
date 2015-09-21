@@ -10,14 +10,39 @@
 """
 
 from __future__ import print_function
+
 import datetime
-import time
 import glob
-import exifread 
+import logging.config
 import os
 import shutil
 import sys
+import time
+
+import exifread 
 from PIL import Image
+
+logging_config = dict(
+    version = 1,
+    formatters = {
+        'f': {'format':
+              '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'}
+        },
+    handlers = {
+        'h': {'class': 'logging.StreamHandler',
+              'formatter': 'f',
+              'level': logging.DEBUG}
+        },
+    loggers = {
+        'root': {'handlers': ['h'],
+                 'level': logging.DEBUG}
+        }
+)
+
+logging.config.dictConfig(logging_config)
+
+logger = logging.getLogger()
+logger.log("hello", 50)
 
 
 def error(msg):
@@ -88,10 +113,10 @@ def optimize(img_dicts):
         newpath = img_dict["newpath"]
         im = Image.open(newpath)
         final_im = im
-	print(img_dict)
 	orientation = img_dict["orientation"]
         if orientation == "Rotated 90 CW":
 	    print("rotate!")
+	    print(img_dict)
             final_im = final_im.rotate(-90)
         final_im.thumbnail((640, 480))
         final_im.save(newpath)
