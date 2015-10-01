@@ -1,4 +1,5 @@
 #!/bin/bash
+source ~/.bash_profile
 while read oldrev newrev ref
 do
     if [[ $ref =~ .*/master$ ]];
