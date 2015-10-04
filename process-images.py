@@ -81,6 +81,12 @@ def get_new_image_name_translations(indir, outdir):
         try:
             f = open(p)
             exif = exifread.process_file(f)
+            """
+            print(p)
+            for i in exif:
+                print(i) 
+            print("\n")
+            """
         except:
             raise
         finally:
@@ -89,10 +95,19 @@ def get_new_image_name_translations(indir, outdir):
             orientation = str(exif["Image Orientation"])
         except KeyError:
             orientation = None
+	try:
+            long = str(exif["GPS GPSLongitude"])
+        except:
+            long = None
+	try:
+            lat = str(exif["GPS GPSLatitude"])
+        except:
+            lat = None
         origtime = str(exif["EXIF DateTimeOriginal"])
         ts = int(time.mktime(datetime.datetime.strptime(origtime, "%Y:%m:%d %H:%M:%S").timetuple()))
         newpath = os.path.join(outdir, str(ts) + ".jpg")
-        d[p] = {"newpath": newpath, "orientation": orientation }
+        d[p] = {"newpath": newpath, "orientation": orientation, 
+            "long": long, "lat": lat}
     return d
 
 def copy_images_to_out(new_image_names):
@@ -101,6 +116,13 @@ def copy_images_to_out(new_image_names):
     for oldpath in new_image_names:
         image_info = new_image_names[oldpath]
         newpath = image_info["newpath"]
+        lat = image_info["lat"]
+        long = image_info["long"]
+        gps_ext = ""
+        if lat is not None and long is not None:
+            gps_ext = "_%s_%s" %(lat, long)
+            print(gps_ext)
+            newpath = os.path.basename(newpath).split(".")[0] + gps_ext.replace(" ", "") + ".jpg"
         shutil.copyfile(oldpath, newpath)
 
 def main():

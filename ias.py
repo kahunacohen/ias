@@ -87,6 +87,7 @@ def index():
             raise IndexError("No images in assets/images/opt")
 
     pager_data = get_pager_data(page, num_pages)
+    print(images_for_this_page)
     return render_template("template.html", 
         title="Israel: an apartheid state?",
         page=page,
