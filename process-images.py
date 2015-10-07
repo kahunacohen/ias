@@ -89,8 +89,15 @@ def get_new_image_name_translations(indir, outdir):
             orientation = str(exif["Image Orientation"])
         except KeyError:
             orientation = None
-        origtime = str(exif["EXIF DateTimeOriginal"])
-        ts = int(time.mktime(datetime.datetime.strptime(origtime, "%Y:%m:%d %H:%M:%S").timetuple()))
+        try:
+            origtime = str(exif["EXIF DateTimeOriginal"])
+            time_extracted = True
+        except KeyError:
+            time_extracted = False
+        if time_extracted:
+            ts = int(time.mktime(datetime.datetime.strptime(origtime, "%Y:%m:%d %H:%M:%S").timetuple()))
+        else:
+            ts = int(time.time())
         newpath = os.path.join(outdir, str(ts) + ".jpg")
         d[p] = {"newpath": newpath, "orientation": orientation }
     return d
