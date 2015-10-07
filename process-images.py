@@ -89,10 +89,12 @@ def get_new_image_name_translations(indir, outdir):
             orientation = str(exif["Image Orientation"])
         except KeyError:
             orientation = None
+
         try:
             origtime = str(exif["EXIF DateTimeOriginal"])
             time_extracted = True
         except KeyError:
+            print("No exif data!")
             time_extracted = False
         if time_extracted:
             ts = int(time.mktime(datetime.datetime.strptime(origtime, "%Y:%m:%d %H:%M:%S").timetuple()))
