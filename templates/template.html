@@ -34,7 +34,7 @@
         <div data-page="{{page}}" class="content" id="ct">
         {% for image_ob in images %}
             {% for path, ob in image_ob.iteritems() %}
-                <figure><img src="{{path}}"><figcaption>{{ob.caption}}<time datetime="{{ob.date}}">{{ob.date}}</time></figcaption></figure>
+            <figure><im id="{{ob.name}}" src="{{path}}"><figcaption>{{ob.caption}}<time datetime="{{ob.date}}">{{ob.date}}</time></figcaption></figure>
             {% endfor %}
         {% endfor %}
 
