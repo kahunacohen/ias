@@ -45,7 +45,6 @@ def get_imagegroups():
                             '%B %d, %Y at %H:%M'
                     )
                     d[path] = {"date": date, "caption": caption}
-                    d["name"] = name
                     l.append(d)
         f.append(l)
     return f
