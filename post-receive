@@ -1,16 +1,17 @@
 #!/bin/bash
+source ~/.bash_profile
 while read oldrev newrev ref
 do
     if [[ $ref =~ .*/master$ ]];
     then
         echo "Master ref received.  Deploying master branch to production..."
-        git --work-tree=PATH_TO_WSGI_APP --git-dir=PATH_TO_BARE_GIT_REPO checkout -f
+        git --work-tree=$PATH_TO_WSGI_APP --git-dir=$PATH_TO_BARE_GIT_REPO checkout -f
         echo "Removing optimized images..."
-        rm -rf PATH_TO_WSGI_APP/static/images/opt 2>&1
-        mkdir PATH_TO_WSGI_APP/static/images/opt 2>&1
+        rm -rf $PATH_TO_WSGI_APP/static/images/opt 2>&1
+        mkdir $PATH_TO_WSGI_APP/static/images/opt 2>&1
         echo "Optimizing original images..."
-        . PATH_TO_VIRTUAL_ENV/bin/activate 2>&1
-        python PATH_TO_WSGI_APP/process-images.py PATH_TO_WSGI_APP/static/images PATH_TO_WSGI_APP/static/images/opt 2>&1
+        . $PATH_TO_VIRTUAL_ENV/bin/activate 2>&1
+        python $PATH_TO_WSGI_APP/process-images.py $PATH_TO_WSGI_APP/static/images $PATH_TO_WSGI_APP/static/images/opt 2>&1
     else
         echo "Ref $ref successfully received.  Doing nothing: only the master branch may be deployed on this server."
     fi

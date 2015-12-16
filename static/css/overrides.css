@@ -1,0 +1,13 @@
+body {
+    margin: 10px;
+}
+dt,dd {
+    display: inline;
+}
+dt {
+    color: #6E6E6E;
+    font-weight: normal;
+}
+figure.sa {
+    max-width: 500px;
+}

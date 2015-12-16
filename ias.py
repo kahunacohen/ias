@@ -7,6 +7,7 @@ from flask import Flask, render_template, request
 from iptcinfo import IPTCInfo
 
 app = Flask(__name__)
+app.debug = True
 THIS_DIR = os.path.dirname(os.path.realpath(__file__))
 
 def grouper(n, iterable, fillvalue=None):
@@ -18,7 +19,15 @@ def grouper(n, iterable, fillvalue=None):
 def get_imagegroups():
     """ Returns a tuple of tuples representing 
     groups of 10 image paths (each group is a page)"""
-    os.chdir(os.path.join(THIS_DIR, "static", "images", "opt"))
+    path_to_optimized_images = os.path.join(THIS_DIR, "static", "images", "opt")
+    try:
+        os.chdir(path_to_optimized_images)
+    except OSError:
+        raise OSError(
+            "Problem getting optimized images at {path}. Run the process-images.py script.".format(
+                path=path_to_optimized_images
+            )
+        )
     sorted_image_paths = sorted(filter(os.path.isfile, os.listdir('.')), reverse=True)
     os.chdir(THIS_DIR)
     groups =  tuple(grouper(10, sorted_image_paths))
@@ -26,12 +35,15 @@ def get_imagegroups():
     for group in groups:
         l = []
         for name in group:
-            if name:
+            if name is not None:
                     path = "static/images/opt/%s" % name
                     d = {}
-		    info = IPTCInfo(path, force=True) 
-		    caption = info.data['caption/abstract'] or ""
-                    date = datetime.datetime.fromtimestamp(int(name.replace(".jpg", ""))).strftime('%Y-%m-%d %H:%M:%S')
+                    info = IPTCInfo(path, force=True) 
+                    caption = info.data['caption/abstract'] or ""
+                    date = datetime.datetime.fromtimestamp(
+                        int(name.replace(".jpg", ""))).strftime(
+                            '%B %d, %Y at %H:%M'
+                    )
                     d[path] = {"date": date, "caption": caption}
                     l.append(d)
         f.append(l)
@@ -69,12 +81,15 @@ def index():
     try:
         images_for_this_page = imagegroups[page-1]
     except IndexError:
-        images_for_this_page = imagegroups[0]
+        try:
+            images_for_this_page = imagegroups[0]
+        except IndexError:
+            raise IndexError("No images in assets/images/opt")
 
     pager_data = get_pager_data(page, num_pages)
     return render_template("template.html", 
-        title="Is Israel a Racist, Apartheid State?",
-	page=page,
+        title="Israel: an apartheid state?",
+        page=page,
         images=images_for_this_page,
         pager=pager_data
     )
@@ -94,4 +109,5 @@ if __name__ == "__main__":
             host = args[0]
             port = None
 
+    #app.debug = True
     app.run(host=host, port=int(port))

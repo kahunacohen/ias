@@ -10,14 +10,41 @@
 """
 
 from __future__ import print_function
+
 import datetime
-import time
 import glob
-import exifread 
+import logging.config
 import os
 import shutil
 import sys
+import time
+
+import exifread 
 from PIL import Image
+
+"""
+logging_config = dict(
+    version = 1,
+    formatters = {
+        'f': {'format':
+              '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'}
+        },
+    handlers = {
+        'h': {'class': 'logging.StreamHandler',
+              'formatter': 'f',
+              'level': logging.DEBUG}
+        },
+    loggers = {
+        'root': {'handlers': ['h'],
+                 'level': logging.DEBUG}
+        }
+)
+
+logging.config.dictConfig(logging_config)
+
+logger = logging.getLogger()
+logger.log("hello", 50)
+"""
 
 
 def error(msg):
@@ -62,9 +89,18 @@ def get_new_image_name_translations(indir, outdir):
             orientation = str(exif["Image Orientation"])
         except KeyError:
             orientation = None
-        origtime = str(exif["EXIF DateTimeOriginal"])
-        ts = int(time.mktime(datetime.datetime.strptime(origtime, "%Y:%m:%d %H:%M:%S").timetuple()))
-	newpath = os.path.join(outdir, str(ts) + ".jpg")
+
+        try:
+            origtime = str(exif["EXIF DateTimeOriginal"])
+            time_extracted = True
+        except KeyError:
+            print("No exif data!")
+            time_extracted = False
+        if time_extracted:
+            ts = int(time.mktime(datetime.datetime.strptime(origtime, "%Y:%m:%d %H:%M:%S").timetuple()))
+        else:
+            ts = int(time.time())
+        newpath = os.path.join(outdir, str(ts) + ".jpg")
         d[p] = {"newpath": newpath, "orientation": orientation }
     return d
 
@@ -88,8 +124,15 @@ def optimize(img_dicts):
         newpath = img_dict["newpath"]
         im = Image.open(newpath)
         final_im = im
-        if img_dict["orientation"] == "Rotated 90 CCW":
+        orientation = img_dict["orientation"]
+        #print(img_dict)
+        #print(img_dict["newpath"])
+        if orientation == "Rotated 90 CW":
+            #print("ROTATING -90!")
             final_im = final_im.rotate(-90)
+        if orientation == "Rotated 90 CCW":
+            final_im = final_im.rotate(-90)
+        #print("\n")
         final_im.thumbnail((640, 480))
         final_im.save(newpath)
 main()

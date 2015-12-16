@@ -3,19 +3,38 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
         <script type="text/javascript" src="/static/js/jquery.jscroll.js"></script>
         <script type="text/javascript" src="/static/js/jquery.ba-throttle-debounce.min.js"></script>
+
         <link type="text/css" rel="stylesheet" href="static/css/foundation-5.5.1.custom/css/normalize.css"/>
         <link type="text/css" rel="stylesheet" href="static/css/foundation-5.5.1.custom/css/foundation.css"/>
+        <link type="text/css" rel="stylesheet" href="static/css/overrides.css"/>
+
         <title>{{title}}</title>
     </head>
     <body>
-        <h1 style="display:none;">{{title}}</h1>
+        <h1>{{title}}</h1>
+        <dl>
+            <dt>Apartheid:</dt>
+            <dd>A policy or system of segregation or discrimination 
+            on grounds of race&hellip;[from] Afrikaans, literally 'separateness', from 
+            Dutch apart 'separate' + -heid
+            <a href="http://goo.gl/7cN6JR">Oxford New English Online Dictionary</a></dd>
+        </dl>
+
+        <figure class="sa">
+            <img src="http://cdn.citylab.com/media/img/citylab/legacy/2013/12/09/a3.jpg"></img>
+	    <figcaption>South Africa, 1950s
+        <a href="http://goo.gl/WC3PHG">http://goo.gl/WC3PHG</a></p></figcaption>
+        </figure>
+
+        <p>The world decries Israel as an apartheid state. Does this look like South Africa?</p>
         <div data-page="{{page}}" class="content" id="ct">
         {% for image_ob in images %}
             {% for path, ob in image_ob.iteritems() %}
-                <figure><img src="{{path}}"><figcaption>{{ob.caption}}<time datetime="{{ob.date}}">{{ob.date}}</time></figcaption></figure>
+            <figure><img src="{{path}}"><figcaption>{{ob.caption}}<time datetime="{{ob.date}}">{{ob.date}}</time></figcaption></figure>
             {% endfor %}
         {% endfor %}
 
