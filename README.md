@@ -25,7 +25,7 @@ bit on the production is already set up, so all you have to do is setup the loca
 The file in this repo, post-receive is the hook that should go in the bare repository on the remote server's `hooks` directory.
 To deploy from a local machine to production server:
 
-    !
+    $ git push production master
 
 The master branch is considered stable. Push the master to the production bare remote: `git push production master`. Don't
 forget to push commits to the default remote branch, this remote on github.
