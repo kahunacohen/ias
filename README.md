@@ -1,12 +1,22 @@
-# ias
-A simple feed of real photos taken in Israel challenging the simplistic notion that Israel is an apartheid state.
+# What is it?
+An "infinitely" scrolling feed of Israeli street-scenes challenging the simplistic notion that Israel is an apartheid state. 
+
+# Technical Details
+It's a [flask](http://flask.pocoo.org/) app. Flask is a minimalistic Python web framework that mainly routes requests
+to handler functions and renders data to templates. Think Django or Ruby on Rails, without a lot of jazz.
+
+Paging is done server-side, but JavaScript injects new pages dynamically on page-scroll. This makes the app SEO friendly
+and addressable yet gives the impression that the photo feed never stops... 
+
+`process-images.py` at the root directory is responsible for batch normalizing images before deploy. When deploying
+the app (see below) this script is called automatically. When running a local server for development, you must call
+this script on the command-line. See comments in the script for more details.
 
 # Development  
-This is a [flask](http://flask.pocoo.org/) app. In development it should be run
+In development it should be run
 by doing: `python ias.py`. A server will automatically be run,
 then point your browser to the location indicated by the terminal. To change the host and/or the default port,
 pass them as positional parameters to ias.py. Eg. `$ python ias.py somehost 8040` 
-
 
 # Deploy
 Deploying code changes involves a git bare repository on the production server. See [https://www.digitalocean.com/community/tutorials/how-to-use-git-hooks-to-automate-development-and-deployment-tasks](https://www.digitalocean.com/community/tutorials/how-to-use-git-hooks-to-automate-development-and-deployment-tasks). The
